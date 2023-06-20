@@ -1,0 +1,39 @@
+[tool.poetry]
+name = "fastapi-social-media-api"
+version = "0.1.0"
+description = ""
+authors = ["Luciano Filho <lvgalvaofilho@gmail.com>"]
+readme = "README.md"
+packages = [{include = "fastapi_social_media_api"}]
+
+[tool.poetry.dependencies]
+python = "3.11.0"
+fastapi = "^0.97.0"
+pydantic = "^1.10.9"
+sqlalchemy = "^2.0.16"
+async-exit-stack = "^1.0.1"
+async-generator = "^1.10"
+pip = "^23.1.2"
+install = "^1.3.5"
+sqlalchemy-utils = "^0.41.1"
+
+
+[tool.poetry.group.dev.dependencies]
+ipdb = "^0.13.13"
+pytest = "^7.3.2"
+pytest-cov = "^4.1.0"
+blue = "^0.9.1"
+isort = "^5.12.0"
+taskipy = "^1.11.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.taskipy.tasks]
+lint = "blue . && isort ."
+docs = "mkdocs serve"
+test = "pytest test -vv && coverage report -m"
+post_test = "coverage html"
+run = "uvicorn app.main.main:app --reload"
+kill = "kill -9 $(lsof -t -i:8000)"
